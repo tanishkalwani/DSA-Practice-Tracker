@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DSA Practice Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fa-solid fa-code"></i>
+        </div>
+
+        <div>
+            <h1>DSA Practice Tracker</h1>
+            <span>Track. Practice. Improve.</span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#topics">Topics</a>
+        <a href="#problems">Problems</a>
+        <a href="#progress">Progress</a>
+    </nav>
+
+    <button id="themeToggle" class="theme-btn">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboard">
+
+        <div class="section-heading">
+            <div>
+                <p class="small-title">WELCOME BACK 👋</p>
+                <h2>Your DSA Dashboard</h2>
+            </div>
+
+            <button class="primary-btn" id="openModal">
+                <i class="fa-solid fa-plus"></i>
+                Add Problem
+            </button>
+        </div>
+
+
+        <!-- SUMMARY CARDS -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <div class="card-icon blue">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <div>
+                    <h3 id="totalSolved">0</h3>
+                    <p>Problems Solved</p>
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="card-icon orange">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+
+                <div>
+                    <h3 id="currentStreak">0</h3>
+                    <p>Current Streak</p>
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="card-icon green">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div>
+                    <h3 id="totalHours">0</h3>
+                    <p>Total Hours Practiced</p>
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="card-icon purple">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+
+                <div>
+                    <h3 id="topicsMastered">0</h3>
+                    <p>Topics Mastered</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- HEATMAP -->
+
+        <div class="panel heatmap-panel">
+
+            <div class="panel-heading">
+
+                <div>
+                    <h3>Activity</h3>
+                    <p>Your daily DSA practice</p>
+                </div>
+
+                <span id="currentMonth"></span>
+
+            </div>
+
+            <div id="heatmap" class="heatmap"></div>
+
+            <div class="heatmap-legend">
+
+                <span>Less</span>
+
+                <span class="heat level-0"></span>
+                <span class="heat level-1"></span>
+                <span class="heat level-2"></span>
+                <span class="heat level-3"></span>
+                <span class="heat level-4"></span>
+
+                <span>More</span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= TOPICS ================= -->
+
+    <section id="topics">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="small-title">LEARN</p>
+                <h2>Topics Overview</h2>
+            </div>
+
+        </div>
+
+
+        <div id="topicsGrid" class="topics-grid"></div>
+
+    </section>
+
+
+    <!-- ================= PROBLEMS ================= -->
+
+    <section id="problems">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="small-title">PRACTICE</p>
+                <h2>Problems</h2>
+            </div>
+
+            <button class="primary-btn" id="openModal2">
+                <i class="fa-solid fa-plus"></i>
+                Add Problem
+            </button>
+
+        </div>
+
+
+        <!-- FILTER BAR -->
+
+        <div class="filter-bar">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-search"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search problems..."
+                >
+
+            </div>
+
+
+            <select id="topicFilter">
+                <option value="">All Topics</option>
+            </select>
+
+
+            <select id="difficultyFilter">
+                <option value="">All Difficulties</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+
+
+            <select id="statusFilter">
+                <option value="">All Status</option>
+                <option value="Solved">Solved</option>
+                <option value="Attempted">Attempted</option>
+                <option value="Revisit">Revisit</option>
+            </select>
+
+        </div>
+
+
+        <!-- PROBLEMS TABLE -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Topic</th>
+                        <th>Difficulty</th>
+                        <th>Platform</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="problemTable"></tbody>
+
+            </table>
+
+            <div id="emptyState" class="empty-state">
+                <i class="fa-solid fa-code"></i>
+                <h3>No problems yet</h3>
+                <p>Add your first DSA problem to start tracking.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= DAILY TIME ================= -->
+
+    <section>
+
+        <div class="section-heading">
+
+            <div>
+                <p class="small-title">CONSISTENCY</p>
+                <h2>Daily Time</h2>
+            </div>
+
+        </div>
+
+
+        <div class="time-layout">
+
+            <div class="panel time-form">
+
+                <h3>Log Today's Study Time</h3>
+
+                <p>
+                    Record how much time you spent practicing DSA today.
+                </p>
+
+                <div class="time-input">
+
+                    <input
+                        type="number"
+                        id="studyMinutes"
+                        placeholder="Minutes"
+                        min="1"
+                    >
+
+                    <button id="logTimeBtn" class="primary-btn">
+                        Log Time
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel chart-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <h3>Study Time</h3>
+                        <p>Last 30 days</p>
+                    </div>
+
+                </div>
+
+                <canvas id="timeChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MONTHLY PROGRESS ================= -->
+
+    <section id="progress">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="small-title">ANALYTICS</p>
+                <h2>Monthly Progress</h2>
+            </div>
+
+        </div>
+
+
+        <div class="analytics-grid">
+
+            <div class="panel chart-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Problems Solved</h3>
+                        <p>Monthly comparison</p>
+                    </div>
+                </div>
+
+                <canvas id="monthlyChart"></canvas>
+
+            </div>
+
+
+            <div class="panel chart-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Difficulty Distribution</h3>
+                        <p>Your solved problems</p>
+                    </div>
+                </div>
+
+                <canvas id="difficultyChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <div class="comparison-card">
+
+            <div class="comparison-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <div>
+                <h3 id="comparisonText">
+                    Start solving problems to see your progress.
+                </h3>
+
+                <p>Compared with your previous month.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= MODAL ================= -->
+
+<div id="problemModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <p class="small-title">NEW ENTRY</p>
+                <h2 id="modalTitle">Add Problem</h2>
+            </div>
+
+            <button id="closeModal" class="close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <form id="problemForm">
+
+            <input type="hidden" id="editId">
+
+
+            <div class="form-group">
+
+                <label>Problem Name *</label>
+
+                <input
+                    type="text"
+                    id="problemName"
+                    placeholder="e.g. Two Sum"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Topic *</label>
+
+                    <select id="problemTopic" required></select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Difficulty *</label>
+
+                    <select id="problemDifficulty" required>
+
+                        <option value="">Select difficulty</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Platform</label>
+
+                    <select id="problemPlatform">
+
+                        <option>LeetCode</option>
+                        <option>Codeforces</option>
+                        <option>GeeksforGeeks</option>
+                        <option>HackerRank</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Date Solved *</label>
+
+                    <input
+                        type="date"
+                        id="problemDate"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Time Taken (minutes)</label>
+
+                    <input
+                        type="number"
+                        id="problemTime"
+                        min="1"
+                        placeholder="30"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Status *</label>
+
+                    <select id="problemStatus" required>
+
+                        <option value="Solved">Solved</option>
+                        <option value="Attempted">Attempted</option>
+                        <option value="Revisit">Revisit</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Notes / Approach</label>
+
+                <textarea
+                    id="problemNotes"
+                    rows="4"
+                    placeholder="Write your approach, complexity, mistakes, etc."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    id="cancelModal"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Problem
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="script.js"></script>
+
+</body>
+</html>
